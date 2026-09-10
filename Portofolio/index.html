@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil & Personal Hub | @ekadevs</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+        
+        * {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* 3D Cyber Mesh Background Grid */
+        .cyber-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse 100% 100% at 50% 0%, black 40%, transparent 100%);
+        }
+
+        /* Glowing Orbs Animation */
+        @keyframes orbPulse {
+            0%, 100% { transform: scale(1) translate(0px, 0px); opacity: 0.4; }
+            50% { transform: scale(1.15) translate(20px, -20px); opacity: 0.7; }
+        }
+        .animate-orb-1 { animation: orbPulse 10s ease-in-out infinite; }
+        .animate-orb-2 { animation: orbPulse 12s ease-in-out infinite reverse; }
+
+        /* Ultra Cyber Glassmorphism */
+        .cyber-card {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .cyber-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(14, 165, 233, 0.3);
+        }
+
+        /* Holographic Text Effects */
+        .holo-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 35%, #c084fc 70%, #34d399 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: holoFlow 6s ease infinite;
+        }
+
+        @keyframes holoFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Cyber Ring Frame For Avatar */
+        .avatar-ring {
+            position: relative;
+        }
+        .avatar-ring::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 9999px;
+            background: linear-gradient(45deg, #06b6d4, #3b82f6, #a855f7, #10b981);
+            animation: spinRing 6s linear infinite;
+            filter: blur(8px);
+            opacity: 0.8;
+        }
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Futuristic Button Effect */
+        .neon-btn {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .neon-btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        .neon-btn:hover::after {
+            left: 100%;
+        }
+
+        /* Floating Slow Animation */
+        .float-slow {
+            animation: floatSlow 7s ease-in-out infinite;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-400 selection:text-black min-h-screen flex flex-col justify-between relative overflow-x-hidden">
+
+    <!-- Ambient Glowing Orbs Background -->
+    <div class="cyber-grid fixed inset-0 pointer-events-none z-0"></div>
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-tr from-cyan-500/20 via-indigo-600/20 to-purple-600/20 blur-[140px] pointer-events-none rounded-full animate-orb-1 z-0"></div>
+    <div class="fixed bottom-0 right-0 w-[500px] h-[500px] bg-emerald-500/15 blur-[160px] pointer-events-none rounded-full animate-orb-2 z-0"></div>
+
+    <div class="relative z-10">
+        <!-- Main Content (Header / Nav Atas Ditiadakan) -->
+        <main class="max-w-4xl mx-auto px-4 pt-16 pb-12 space-y-10">
+
+            <!-- Hero Section Super Futuristic -->
+            <section class="cyber-card rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group">
+                <!-- Decorative Subtle Background Grid inside Card -->
+                <div class="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none"></div>
+
+                <!-- Status Badge -->
+                <div class="absolute top-6 right-6 hidden sm:flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-lg shadow-emerald-500/10">
+                    <span class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    </span>
+                    OPEN FOR LEARNING
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 relative z-10">
+                    <!-- Foto Profil Ukuran Extra Large + Glowing Ring -->
+                    <div class="avatar-ring shrink-0 float-slow">
+                        <div class="relative w-48 h-48 md:w-56 md:h-56">
+                            <img src="Foto.jpg" alt="Foto Profil" class="relative z-10 w-full h-full rounded-full object-cover border-2 border-slate-900 shadow-2xl">
+                            <!-- Floating Badge Badge Tech Icon -->
+                            <div class="absolute z-20 bottom-2 right-2 bg-gradient-to-tr from-cyan-400 to-indigo-500 text-slate-950 p-3 rounded-2xl text-base flex items-center justify-center w-12 h-12 font-black shadow-2xl border-2 border-slate-900 transition-transform duration-300 hover:scale-110">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Details & Intro -->
+                    <div class="space-y-4 text-center md:text-left flex-1">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 tracking-wider uppercase">
+                            <i class="fas fa-terminal text-cyan-400"></i> Pelajar & Tech Explorer
+                        </div>
+                        
+                        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                            Halo, Saya <br class="hidden md:block"/>
+                            <span class="holo-text">Diki Eka S</span>
+                        </h1>
+
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed max-w-xl font-normal">
+                            Seorang pelajar yang berfokus pada eksplorasi teknologi, eksperimen hardware Arduino, serta aktif mendirikan dan mengelola komunitas edukasi digital untuk membagikan ilmu pengetahuan.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card Utama: Portal Proyek Mandiri (Link Web Lain) -->
+            <section class="cyber-card rounded-[2rem] p-8 md:p-10 space-y-6 relative overflow-hidden group">
+                <div class="absolute -right-16 -top-16 w-60 h-60 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-all duration-700"></div>
+
+                <div class="flex items-start justify-between relative z-10">
+                    <div class="space-y-3 max-w-xl">
+                        <div class="text-xs font-black text-emerald-400 uppercase tracking-widest flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <i class="fas fa-flask"></i> Documentation & Lab
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Portal Proyek & Tutorial Mandiri</h2>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Akses seluruh catatan eksperimen Arduino, skema wiring, kodingan C++, dan panduan langkah demi langkah yang pernah saya buat di web dokumentasi.
+                        </p>
+                    </div>
+                    <div class="hidden md:flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-2xl float-slow shadow-inner">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                </div>
+
+                <div class="pt-2 relative z-10">
+                    <a href="proyekmandiri.html" target="_blank" class="neon-btn inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-slate-950 font-black text-sm px-8 py-4 rounded-2xl active:scale-95 w-full sm:w-auto shadow-xl shadow-emerald-500/25">
+                        <i class="fas fa-external-link-alt"></i> Buka Portal Proyek & Tutorial
+                    </a>
+                </div>
+            </section>
+
+            <!-- Ekosistem Konten Digital (3 Cards TikTok) -->
+            <section class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-extrabold text-white flex items-center gap-3 tracking-wide">
+                        <i class="fas fa-cubes text-cyan-400"></i> Ekosistem Konten Digital
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Card @ekadevs -->
+                    <div class="cyber-card p-6 rounded-[1.5rem] space-y-6 flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg font-bold shadow-inner">
+                                    <i class="fas fa-terminal"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-800/80 text-slate-300 px-3 py-1 rounded-full border border-slate-700/60">Personal</span>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">ekadevs</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">Eksperimen hardware Arduino, kodingan, dan behind-the-scenes pembuatan alat.</p>
+                            </div>
+                        </div>
+                        <a href="https://tiktok.com/@ekadevs" target="_blank" class="w-full bg-slate-800/90 hover:bg-cyan-400 hover:text-slate-950 text-white font-bold text-xs py-3.5 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2.5 border border-slate-700/60 hover:border-cyan-400 shadow-md">
+                            <i class="fab fa-tiktok text-sm"></i> Follow TikTok
+                        </a>
+                    </div>
+
+                    <!-- Card @zonaliterasidigital -->
+                    <div class="cyber-card p-6 rounded-[1.5rem] space-y-6 flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg font-bold shadow-inner">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-800/80 text-slate-300 px-3 py-1 rounded-full border border-slate-700/60">Komunitas</span>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Zona Literasi Digital</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">Platform belajar teknologi dasar, literasi digital, dan edukasi publik.</p>
+                            </div>
+                        </div>
+                        <a href="https://tiktok.com/@zonaliterasidigital" target="_blank" class="w-full bg-slate-800/90 hover:bg-cyan-400 hover:text-slate-950 text-white font-bold text-xs py-3.5 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2.5 border border-slate-700/60 hover:border-cyan-400 shadow-md">
+                            <i class="fab fa-tiktok text-sm"></i> Follow TikTok
+                        </a>
+                    </div>
+
+                    <!-- Card Brain Grow Up -->
+                    <div class="cyber-card p-6 rounded-[1.5rem] space-y-6 flex flex-col justify-between group">
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg font-bold shadow-inner">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider bg-slate-800/80 text-slate-300 px-3 py-1 rounded-full border border-slate-700/60">Edukasi OSN</span>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Brain Grow Up</h3>
+                                <p class="text-xs text-slate-400 leading-relaxed">Hub latihan soal, materi PPT, strategi belajar, dan silabus pejuang OSN.</p>
+                            </div>
+                        </div>
+                        <a href="https://tiktok.com/@braingrowup.osn" target="_blank" class="w-full bg-slate-800/90 hover:bg-cyan-400 hover:text-slate-950 text-white font-bold text-xs py-3.5 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2.5 border border-slate-700/60 hover:border-cyan-400 shadow-md">
+                            <i class="fab fa-tiktok text-sm"></i> Follow TikTok
+                        </a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Banner Website Rekomendasi -->
+            <section class="cyber-card rounded-[2rem] p-8 md:p-9 flex flex-col sm:flex-row items-center justify-between gap-6 border-cyan-500/30">
+                <div class="space-y-2 text-center sm:text-left">
+                    <div class="flex items-center justify-center sm:justify-start gap-2 text-cyan-400 text-xs font-black uppercase tracking-widest">
+                        <i class="fas fa-rocket"></i> Platform Rekomendasi
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white">Ingin Belajar Tech Lebih Dalam?</h3>
+                    <p class="text-slate-400 text-xs md:text-sm">Tingkatkan pemahaman koding dan eksplorasi materi teknologi tingkat lanjut.</p>
+                </div>
+                <a href="https://KREATIF-TECH.BLOGSPOT.COM" target="_blank" class="shrink-0 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-xs px-7 py-4 rounded-xl transition-all flex items-center gap-2.5 active:scale-95 shadow-xl shadow-cyan-500/20">
+                    <i class="fas fa-globe"></i> Buka Website Kreatif Tech
+                </a>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer Quote -->
+    <footer class="border-t border-slate-800/80 bg-slate-950/90 backdrop-blur-xl py-12 mt-16 text-center relative z-10">
+        <div class="max-w-2xl mx-auto px-4 space-y-4">
+            <div class="text-cyan-400 text-3xl float-slow">
+                <i class="fas fa-quote-left"></i>
+            </div>
+            <p class="text-slate-300 italic text-sm md:text-base leading-relaxed font-light">
+                "Teknologi bukan sekadar tentang merakit alat atau menulis baris kode, melainkan tentang bagaimana kita menggunakan pengetahuan tersebut untuk mempermudah hidup dan membukakan pintu belajar bagi sesama."
+            </p>
+            <div class="pt-4 text-xs text-slate-500">
+                <p>© 2026 <strong class="text-slate-300">@ekadevs</strong> • Crafted with curiosity and code.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
