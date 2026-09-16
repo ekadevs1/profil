@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan DIY: Sistem Palang Pintu Otomatis & Akses Kontrol RFID RC522 | @ekadevs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+
+        code, pre {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+        }
+
+        .code-container {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyan-500 selection:text-black">
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-gray-800 bg-gray-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-cyan-500 text-black p-2 rounded-lg font-black text-xl flex items-center justify-center w-10 h-10">
+                    &lt;/&gt;
+                </div>
+                <div>
+                    <h1 class="text-white font-bold text-lg leading-none">@ekadevs</h1>
+                    <span class="text-xs text-cyan-400 font-medium">IoT & Robotics Tutorials</span>
+                </div>
+            </div>
+            <a href="https://tiktok.com/@ekadevs" target="_blank" class="bg-gradient-to-r from-pink-500 to-cyan-500 hover:opacity-90 text-white font-semibold text-xs px-4 py-2 rounded-full transition-all flex items-center gap-2">
+                <i class="fab fa-tiktok"></i> Follow TikTok
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 py-8 space-y-10">
+
+        <!-- Hero Section -->
+        <section class="space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-950 text-cyan-400 border border-cyan-800">
+                <i class="fas fa-microchip"></i> Proyek RFID & Smart Gate
+            </div>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                Panduan DIY: Sistem Palang Pintu Otomatis & Akses Kontrol Berbasis RFID RC522
+            </h1>
+            <p class="text-gray-400 text-base md:text-lg leading-relaxed">
+                Pelajari cara membuat sistem palang pintu otomatis berbasis RFID RC522, Servo, LCD I2C, dan Arduino Uno untuk keamanan akses gerbang modern.
+            </p>
+
+            <!-- Foto Proyek Utama -->
+            <div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-gray-800 bg-gray-900 shadow-2xl glow-effect">
+                <img src="IMG_20260916_071238.jpg" 
+                     alt="Dokumentasi Proyek RFID Smart Gate Arduino" 
+                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-gray-950/90 via-gray-950/40 to-transparent p-4 md:p-6">
+                    <span class="text-xs font-semibold text-cyan-400 uppercase tracking-wider">Dokumentasi Hasil Proyek</span>
+                    <p class="text-xs md:text-sm text-gray-300">Rangkaian hardware sistem palang pintu otomatis RFID RC522 dengan tampilan LCD I2C 16x2.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Konsep & Cara Kerja -->
+        <section class="bg-gray-900 border border-gray-800 rounded-2xl p-6 md:p-8 space-y-4 glow-effect">
+            <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fas fa-brain text-cyan-400"></i> Konsep & Cara Kerja Sistem
+            </h2>
+            <p class="text-gray-300 leading-relaxed">
+                Sistem smart gate ini menggunakan **Arduino Uno** sebagai pusat pemroses data dan modul **RFID RC522** untuk membaca Unique Identifier (UID) dari kartu akses:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div class="bg-gray-800/60 border border-gray-700/50 p-4 rounded-xl">
+                    <div class="text-cyan-400 text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>1.</span> Scan RFID Card
+                    </div>
+                    <p class="text-sm text-gray-400">Pengguna menempelkan kartu/keyfob RFID ke modul pembaca RC522.</p>
+                </div>
+                <div class="bg-gray-800/60 border border-gray-700/50 p-4 rounded-xl">
+                    <div class="text-cyan-400 text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>2.</span> Verifikasi UID
+                    </div>
+                    <p class="text-sm text-gray-400">Arduino mencocokkan kode UID kartu dengan data yang terdaftar pada sistem.</p>
+                </div>
+                <div class="bg-gray-800/60 border border-gray-700/50 p-4 rounded-xl">
+                    <div class="text-cyan-400 text-xl font-bold mb-2 flex items-center gap-2">
+                        <span>3.</span> Akses Pintu / Alarm
+                    </div>
+                    <p class="text-sm text-gray-400">Jika sah, palang servo membuka. Jika tidak, LED merah berkedip dan buzzer memicu alarm.</p>
+                </div>
+            </div>
+
+            <!-- Status Level -->
+            <div class="mt-6 pt-4 border-t border-gray-800">
+                <h3 class="text-sm font-semibold text-gray-300 mb-3">Respon & Status Akses Sistem:</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="bg-emerald-950/40 border border-emerald-800/60 p-3 rounded-lg flex items-center gap-3">
+                        <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                        <div>
+                            <div class="text-emerald-400 font-bold text-sm">AKSES DITERIMA</div>
+                            <div class="text-xs text-emerald-200/70">LED Hijau ON + Beep 2x + Palang Servo Membuka 3 Detik</div>
+                        </div>
+                    </div>
+                    <div class="bg-rose-950/40 border border-rose-800/60 p-3 rounded-lg flex items-center gap-3">
+                        <div class="w-3 h-3 rounded-full bg-rose-500 animate-pulse"></div>
+                        <div>
+                            <div class="text-rose-400 font-bold text-sm">AKSES DITOLAK</div>
+                            <div class="text-xs text-rose-200/70">LED Merah Kedip + Alarm 1 Detik + Palang Tetap Tertutup</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step Pengecekan UID -->
+        <section class="bg-cyan-950/30 border border-cyan-800/60 rounded-2xl p-6 md:p-8 space-y-6">
+            <div class="space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950 px-3 py-1 rounded-full border border-cyan-800">Langkah Penting</span>
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fas fa-id-card text-cyan-400"></i> Cara Mengetahui & Memeriksa Kode UID Kartu RFID
+                </h2>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    Setiap kartu/gantungan kunci RFID memiliki kode unik (UID) 4-byte. Sebelum menjalankan kode palang pintu, jalankan program checker ini terlebih dahulu untuk membaca kode UID milikmu.
+                </p>
+            </div>
+
+            <!-- Script Check UID Code -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-semibold text-gray-300">Skrip Arduino RFID UID Reader:</span>
+                    <button id="copyUidBtn" onclick="copyUidCode()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs px-3 py-1.5 rounded-lg transition-all flex items-center gap-2">
+                        <i class="fa-regular fa-copy"></i> <span id="copyUidBtnText">Copy Code Reader</span>
+                    </button>
+                </div>
+                <div class="code-container rounded-xl overflow-hidden">
+                    <div class="bg-gray-800/80 px-4 py-2 border-b border-gray-700/60 flex items-center justify-between text-xs text-gray-400">
+                        <span class="font-mono text-cyan-300">rfid_uid_reader.ino</span>
+                        <span>C++ / Arduino IDE</span>
+                    </div>
+                    <pre class="p-4 text-xs md:text-sm text-gray-200 overflow-x-auto leading-relaxed"><code id="uidCodeBlock">#include &lt;SPI.h&gt;
+#include &lt;MFRC522.h&gt;
+
+#define SS_PIN 10
+#define RST_PIN 9
+
+MFRC522 rfid(SS_PIN, RST_PIN);
+
+void setup() {
+  Serial.begin(9600);
+  SPI.begin();
+  rfid.PCD_Init();
+  Serial.println("--- TEMPELKAN KARTU RFID UNTUK MEMBACA UID ---");
+}
+
+void loop() {
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+    return;
+  }
+
+  Serial.print("KODE UID KARTU KAMU: ");
+  for (byte i = 0; i &lt; rfid.uid.size; i++) {
+    Serial.print("0x");
+    if (rfid.uid.uidByte[i] &lt; 0x10) Serial.print("0");
+    Serial.print(rfid.uid.uidByte[i], HEX);
+    if (i &lt; rfid.uid.size - 1) Serial.print(", ");
+  }
+  Serial.println();
+
+  rfid.PICC_HaltA();
+  rfid.PCD_StopCrypto1();
+  delay(1000);
+}</code></pre>
+                </div>
+            </div>
+
+            <!-- Cara Membaca Hasil Serial Monitor -->
+            <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl space-y-3 text-sm">
+                <h3 class="font-bold text-white flex items-center gap-2">
+                    <i class="fas fa-terminal text-cyan-400"></i> Cara Membaca Output dari Serial Monitor:
+                </h3>
+                <ol class="list-decimal list-inside space-y-1.5 text-gray-300">
+                    <li>Upload program reader di atas ke Arduino.</li>
+                    <li>Buka <strong>Serial Monitor</strong> (Ctrl + Shift + M) dan set Baud Rate ke <code class="text-cyan-300">9600</code>.</li>
+                    <li>Tempelkan kartu RFID pada sensor. Hasil pembacaan akan muncul seperti ini:
+                        <div class="mt-2 p-3 bg-black/60 rounded-lg border border-gray-800 font-mono text-xs text-emerald-400">
+                            KODE UID KARTU KAMU: 0xB5, 0x7A, 0x17, 0x07
+                        </div>
+                    </li>
+                    <li>Salin deretan kode byte tersebut ke variabel <code class="text-cyan-300">uidKartuAkses[]</code> di program utama di bawah.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Daftar Komponen -->
+        <section class="space-y-4">
+            <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fas fa-boxes-stacked text-cyan-400"></i> Alat & Bahan yang Dibutuhkan
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <span class="font-medium text-gray-200">1x Arduino Uno</span>
+                    <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1 rounded-md">Utama</span>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <span class="font-medium text-gray-200">1x Modul RFID RC522 + Card/Keyfob</span>
+                    <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1 rounded-md">Sensor</span>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <span class="font-medium text-gray-200">1x LCD 16x2 + Modul I2C (0x27)</span>
+                    <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1 rounded-md">Display</span>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <span class="font-medium text-gray-200">1x Servo SG90 / MG995</span>
+                    <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1 rounded-md">Motor Palang</span>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <span class="font-medium text-gray-200">2x LED 5mm (Hijau & Merah) + Resistor</span>
+                    <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1 rounded-md">Indikator</span>
+                </div>
+                <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <span class="font-medium text-gray-200">1x Buzzer Active & Kabel Jumper</span>
+                    <span class="text-xs bg-gray-800 text-gray-400 px-2.5 py-1 rounded-md">Audio & Kabel</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skema Pinout -->
+<!-- Skema Pinout Lengkap -->
+        <section class="space-y-4">
+            <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fas fa-network-wired text-cyan-400"></i> Skema Wiring / Pinout Arduino Lengkap
+            </h2>
+            <div class="overflow-x-auto rounded-xl border border-gray-800">
+                <table class="w-full text-left text-sm text-gray-300">
+                    <thead class="bg-gray-900 text-cyan-400 uppercase text-xs tracking-wider border-b border-gray-800">
+                        <tr>
+                            <th class="px-6 py-3.5">Nama Komponen</th>
+                            <th class="px-6 py-3.5">Pin Komponen</th>
+                            <th class="px-6 py-3.5">Sambungan ke Arduino / Daya</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800 bg-gray-900/50">
+                        <!-- RFID RC522 -->
+                        <tr>
+                            <td class="px-6 py-3 font-semibold text-white" rowspan="7">Modul RFID RC522</td>
+                            <td class="px-6 py-3">VCC</td>
+                            <td class="px-6 py-3 font-mono text-amber-400">3.3V (Wajib 3.3V, jangan ke 5V!)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">RST</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D9</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">GND</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">GND</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">MISO</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D12</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">MOSI</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D11</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">SCK</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D13</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">SDA (SS)</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D10</td>
+                        </tr>
+
+                        <!-- LCD 16x2 I2C -->
+                        <tr>
+                            <td class="px-6 py-3 font-semibold text-white" rowspan="4">LCD 16x2 I2C</td>
+                            <td class="px-6 py-3">VCC</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">5V</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">GND</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">GND</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">SDA</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin A4</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">SCL</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin A5</td>
+                        </tr>
+
+                        <!-- Servo Motor -->
+                        <tr>
+                            <td class="px-6 py-3 font-semibold text-white" rowspan="3">Servo Motor (SG90)</td>
+                            <td class="px-6 py-3">Signal (Kuning / Oranye)</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D8</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">VCC / Power (Merah)</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">5V (Rekomendasi adaptor/power eksternal)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">GND (Cokelat / Hitam)</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">GND (Gabungkan GND Arduino & Power Eksternal)</td>
+                        </tr>
+
+                        <!-- LED Merah -->
+                        <tr>
+                            <td class="px-6 py-3 font-semibold text-rose-400" rowspan="2">LED Merah</td>
+                            <td class="px-6 py-3">Anoda (+) kaki panjang</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D4 (Melalui Resistor 220Ω)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">Katoda (-) kaki pendek</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">GND</td>
+                        </tr>
+
+                        <!-- LED Hijau -->
+                        <tr>
+                            <td class="px-6 py-3 font-semibold text-emerald-400" rowspan="2">LED Hijau</td>
+                            <td class="px-6 py-3">Anoda (+) kaki panjang</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D5 (Melalui Resistor 220Ω)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">Katoda (-) kaki pendek</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">GND</td>
+                        </tr>
+
+                        <!-- Buzzer -->
+                        <tr>
+                            <td class="px-6 py-3 font-semibold text-purple-400" rowspan="2">Buzzer Aktif</td>
+                            <td class="px-6 py-3">Positif (+)</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">Pin D6</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-3">Negatif (-)</td>
+                            <td class="px-6 py-3 font-mono text-cyan-300">GND</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Source Code Section -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                    <i class="fas fa-code text-cyan-400"></i> Arduino Source Code Utama (C++)
+                </h2>
+                <button id="copyBtn" onclick="copyMainCode()" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs px-4 py-2 rounded-lg transition-all flex items-center gap-2 shadow-lg shadow-cyan-500/20 active:scale-95">
+                    <i class="fa-regular fa-copy"></i> <span id="copyBtnText">Copy Main Code</span>
+                </button>
+            </div>
+
+            <div class="code-container rounded-xl overflow-hidden shadow-2xl">
+                <div class="bg-gray-800/80 px-4 py-2.5 border-b border-gray-700/60 flex items-center justify-between text-xs text-gray-400">
+                    <span class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                        <span class="ml-2 font-mono text-gray-300">rfid_smart_gate.ino</span>
+                    </span>
+                    <span>C++ / Arduino IDE</span>
+                </div>
+                <pre class="p-4 text-sm text-gray-200 overflow-x-auto leading-relaxed"><code id="codeBlock">#include &lt;SPI.h&gt;
+#include &lt;MFRC522.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+#include &lt;Servo.h&gt;
+
+#define SS_PIN 10
+#define RST_PIN 9
+#define LED_MERAH 4
+#define LED_HIJAU 5
+#define BUZZER_PIN 6
+#define SERVO_PIN 8
+
+MFRC522 rfid(SS_PIN, RST_PIN);
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+Servo palangServo;
+
+// KODE UID KARTU YANG DIIZINKAN (Ubah sesuai hasil program reader kamu)
+byte uidKartuAkses[] = {0xB5, 0x7A, 0x17, 0x07}; 
+
+void setup() {
+  SPI.begin();
+  rfid.PCD_Init();
+  
+  lcd.init();
+  lcd.backlight();
+  
+  pinMode(LED_MERAH, OUTPUT);
+  pinMode(LED_HIJAU, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  
+  palangServo.attach(SERVO_PIN);
+  palangServo.write(140); // Posisi palang tertutup
+
+  tampilkanStandby();
+}
+
+void loop() {
+  if (!rfid.PICC_IsNewCardPresent() || !rfid.PICC_ReadCardSerial()) {
+    return;
+  }
+
+  bool aksesDiterima = true;
+  for (byte i = 0; i < rfid.uid.size; i++) {
+    if (rfid.uid.uidByte[i] != uidKartuAkses[i]) {
+      aksesDiterima = false;
+      break;
+    }
+  }
+
+  if (aksesDiterima) {
+    // 1. AKSES DITERIMA
+    digitalWrite(LED_MERAH, LOW);
+    digitalWrite(LED_HIJAU, HIGH); // Nyalakan LED Hijau
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(" AKSES DITERIMA ");
+    lcd.setCursor(0, 1);
+    lcd.print("Silakan Masuk..");
+
+    // Sound Beep 2x
+    digitalWrite(BUZZER_PIN, HIGH); delay(100);
+    digitalWrite(BUZZER_PIN, LOW);  delay(100);
+    digitalWrite(BUZZER_PIN, HIGH); delay(100);
+    digitalWrite(BUZZER_PIN, LOW);
+
+    palangServo.write(14); // Buka Gerbang
+    delay(3000);           // Tahan 3 detik
+
+    palangServo.write(140); // Tutup Gerbang Kembali
+  } else {
+    // 2. AKSES DITOLAK
+    digitalWrite(LED_HIJAU, LOW);
+    
+    // Kedipkan LED Merah sebagai tanda peringatan
+    for(int i = 0; i < 3; i++) {
+      digitalWrite(LED_MERAH, LOW);  delay(100);
+      digitalWrite(LED_MERAH, HIGH); delay(100);
+    }
+
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("  AKSES DITOLAK ");
+    lcd.setCursor(0, 1);
+    lcd.print("Kartu Tidak Sah!");
+
+    digitalWrite(BUZZER_PIN, HIGH);
+    delay(1000);
+    digitalWrite(BUZZER_PIN, LOW);
+  }
+
+  rfid.PICC_HaltA();
+  rfid.PCD_StopCrypto1();
+  
+  delay(1000);
+  tampilkanStandby();
+}
+
+void tampilkanStandby() {
+  digitalWrite(LED_MERAH, HIGH); // Standby LED Merah ON
+  digitalWrite(LED_HIJAU, LOW);  // Standby LED Hijau OFF
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("  TEMPEL KARTU  ");
+  lcd.setCursor(0, 1);
+  lcd.print("  AKSES GERBANG ");
+}</code></pre>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 bg-gray-950 py-8 text-center text-gray-500 text-sm mt-12">
+        <p>© 2026 <strong>@ekadevs</strong>. Made for robotics & electronics enthusiasts.</p>
+    </footer>
+
+    <!-- Copy Code Script -->
+    <script>
+        function copyMainCode() {
+            const codeText = document.getElementById('codeBlock').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btnText = document.getElementById('copyBtnText');
+                const btn = document.getElementById('copyBtn');
+                
+                btnText.innerText = "Copied!";
+                btn.classList.remove('bg-cyan-500', 'hover:bg-cyan-400');
+                btn.classList.add('bg-emerald-500', 'text-white');
+
+                setTimeout(() => {
+                    btnText.innerText = "Copy Main Code";
+                    btn.classList.remove('bg-emerald-500', 'text-white');
+                    btn.classList.add('bg-cyan-500', 'hover:bg-cyan-400');
+                }, 2000);
+            });
+        }
+
+        function copyUidCode() {
+            const codeText = document.getElementById('uidCodeBlock').innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                const btnText = document.getElementById('copyUidBtnText');
+                const btn = document.getElementById('copyUidBtn');
+                
+                btnText.innerText = "Copied!";
+                btn.classList.remove('bg-cyan-600', 'hover:bg-cyan-500');
+                btn.classList.add('bg-emerald-500');
+
+                setTimeout(() => {
+                    btnText.innerText = "Copy Code Reader";
+                    btn.classList.remove('bg-emerald-500');
+                    btn.classList.add('bg-cyan-600', 'hover:bg-cyan-500');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
